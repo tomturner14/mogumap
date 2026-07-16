@@ -15,7 +15,8 @@
 - React 19.2.4
 - TypeScript 5系
 - App Router
-- CSS Modules
+- Sass 1.101.0
+- SCSS Modules
 - ESLint 9系
 
 ## 2. モノレポ構成
@@ -43,15 +44,15 @@ npm workspacesを使用する。
 現在の主なファイルは次のとおり。
 
     apps/web/src/app/
-    ├── globals.css
+    ├── globals.scss
     ├── layout.tsx
-    ├── page.module.css
+    ├── page.module.scss
     └── page.tsx
 
 - `layout.tsx`：すべての画面に共通する外枠
 - `page.tsx`：現在のトップページ
-- `globals.css`：アプリ全体へ適用するCSS
-- `page.module.css`：トップページ専用のCSS
+- `globals.scss`：アプリ全体へ適用するSCSS
+- `page.module.scss`：トップページ専用のSCSS Modules
 
 ## 4. 外部APIとの通信方針
 
@@ -72,6 +73,25 @@ npm workspacesを使用する。
     ブラウザへ必要な結果だけ返す
 
 ブラウザからホットペッパーグルメAPIを直接呼び出さない。
+
+### 検索条件をURLへ持たせる方法
+
+検索フォームはGETで送信する。
+
+中エリアとキーワードは、次の名前でURLのクエリパラメータへ含める。
+
+- 中エリア：`middleArea`
+- キーワード：`keyword`
+
+検索画面には、トップページの`/`を使用する。
+
+現在のURLは、次の形式とする。
+
+      /?middleArea=Y115&keyword=焼肉
+
+ページを表示するときは、URLから検索条件を受け取り、フォームの初期値へ戻す。
+
+これにより、検索後にページを再表示しても、選択した中エリアと入力したキーワードを確認できる。
 
 サーバー側APIを次のどちらで実装するかは、まだ決定していない。
 
@@ -138,8 +158,7 @@ Next.jsがPostCSS 8.5.10以上へ正式対応した後、overrideを外せるか
 ## 8. 未決定事項
 
 - サーバー側APIをNext.jsとExpressのどちらで実装するか
-- 検索画面、結果一覧、店舗詳細のURL
-- 検索条件をURLへ持たせる方法
+- 検索結果一覧と店舗詳細ページのURL
 - ホットペッパーグルメAPIのレスポンスを受け取る型
 - 環境変数の具体的な名前
 - テスト方法
