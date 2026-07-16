@@ -1,64 +1,72 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 
-export default function Home() {
+const middleAreas = [
+  { code: "Y115", name: "千葉・稲毛" },
+  { code: "Y128", name: "海浜幕張" },
+  { code: "Y120", name: "船橋・津田沼・市川・本八幡・中山" },
+  { code: "Y125", name: "柏・南柏・我孫子" },
+  { code: "Y690", name: "松戸・新松戸" },
+  { code: "Y126", name: "舞浜・浦安・行徳・妙典" },
+  { code: "Y129", name: "蘇我・鎌取・茂原" },
+  { code: "Y127", name: "成田・佐倉" },
+  { code: "Y859", name: "木更津・市原" },
+  { code: "Y858", name: "銚子・旭" },
+  { code: "Y121", name: "南房総・館山" },
+  { code: "Y122", name: "千葉県その他" },
+];
+
+type HomeProps = {
+  searchParams: Promise<{
+    middleArea?: string | string[];
+    keyword?: string | string[];
+  }>;
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+
+  const selectedMiddleArea =
+    typeof params.middleArea === "string" ? params.middleArea : "";
+
+  const keyword = typeof params.keyword === "string" ? params.keyword : "";
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
         <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+          <h1>MoguMap</h1>
+          <p>千葉県内の飲食店を、中エリアとキーワードで検索できます。</p>
+
+          <form className={styles.form}>
+            <label htmlFor="middle-area">中エリア</label>
+
+            <select
+              id="middle-area"
+              name="middleArea"
+              defaultValue={selectedMiddleArea}
+              required
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              <option value="" disabled>
+                中エリアを選択してください
+              </option>
+              {middleAreas.map((area) => (
+                <option key={area.code} value={area.code}>
+                  {area.name}
+                </option>
+              ))}
+            </select>
+
+            <label htmlFor="keyword">キーワード</label>
+            <input
+              id="keyword"
+              name="keyword"
+              type="search"
+              placeholder="店名や料理名を入力してください"
+              defaultValue={keyword}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            <button type="submit">検索する</button>
+          </form>
         </div>
       </main>
     </div>

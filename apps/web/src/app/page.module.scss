@@ -5,8 +5,6 @@
   --text-primary: #000;
   --text-secondary: #666;
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
   --button-secondary-border: #ebebeb;
 
   display: flex;
@@ -56,54 +54,50 @@
   color: var(--text-secondary);
 }
 
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
+.form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
+  max-width: 480px;
+  gap: 12px;
 
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
-}
-
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--button-secondary-border);
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
+  label {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
   }
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
+  select,
+  input {
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--button-secondary-border);
+    border-radius: 8px;
+    background-color: var(--foreground);
+    color: var(--text-primary);
+    font: inherit;
+
+    &:focus {
+      outline: 2px solid #f97316;
+      outline-offset: 2px;
+    }
+  }
+
+  button {
+    min-height: 44px;
+    margin-top: 4px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #f97316;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #ea580c;
+    }
   }
 }
 
@@ -124,10 +118,6 @@ a.secondary {
 }
 
 @media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
   .page {
     --background: #000;
     --foreground: #000;
@@ -135,8 +125,6 @@ a.secondary {
     --text-primary: #ededed;
     --text-secondary: #999;
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
     --button-secondary-border: #1a1a1a;
   }
 }
